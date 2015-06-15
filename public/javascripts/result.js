@@ -1,4 +1,4 @@
-  
+/*This does only one thing: refresh the pic in case it does not appear.*/  
 
     window.onload = function() {
         var iframe = document.getElementById('graph');
