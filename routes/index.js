@@ -2,10 +2,13 @@ var express = require('express');
 var router = express.Router();
 
 /*Modules below are required by Bo*/
-var util = require('util');
+
 var yahooFinance = require('yahoo-finance');
-var _ = require('lodash');
 var PLOTLY = require('plotly')("yuanb10", "ma28tmtelj");
+
+/*modules below are required by yahoo-finance api*/
+var _ = require('lodash');
+var util = require('util');
 
 /*The fileds is used for querying Yahoo Finance API*/
 var FIELDS = _.flatten([
@@ -33,25 +36,23 @@ var FIELDS = _.flatten([
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Welcome' });
-});
+    res.render('index', { title: 'Welcome' });
+  });
 
-
+/* POST to the result page*/
 router.post('/', function(req, res){
   var SYMBOL = req.body.ticker;
   var duration = req.body.optradio;
-  // require('colors');
   
+/* Manipulate the post information to get query*/ 
   //get current date
   var ct = DateUtil.getCurrentDateTime();
-
-  console.log("YOYO CHECK HERE!!"+ct);
   //add the certain amount of time duration 
 	var pt = DateUtil.getPreviousDateTime(duration);
   
-  console.log("YOYO CHECK tHERE!!"+pt);
-
-  yahooFinance.historical({
+ 
+/*Call Yahoo Financial API to query and get data*/
+yahooFinance.historical({
       symbol: SYMBOL,
       from: pt,
       to: ct,
@@ -59,34 +60,34 @@ router.post('/', function(req, res){
     }, function (err, quotes) {
       
     if (err) { throw err; }
-    console.log(util.format(
-        '=== %s (%d) ===',
-        SYMBOL,
-        quotes.length
+        console.log(util.format(//output the query information to console
+          '=== %s (%d) ===',
+          SYMBOL,
+          quotes
     ).cyan);
 
     
-    if (quotes[0]) {
-        // console.log(
-        //   '%s\n...\n%s',
-        //   JSON.stringify(quotes[0], null, 2),
-        //   JSON.stringify(quotes[quotes.length - 1], null, 2)
-        // );
+    if (quotes[0]) {//if quotes returns data, then print the 1st and last records to console
+        console.log(
+          '%s\n...\n%s',
+          JSON.stringify(quotes[0], null, 2),
+          JSON.stringify(quotes[quotes.length - 1], null, 2)
+        );
 
-    } else {
+    } else {//if no data log 'N/A' to console
       console.log('N/A');
-      
     }
 
-    yahooFinance.snapshot({
+    yahooFinance.snapshot({//using yahoo finance api to get snapshot of the company.
       fields: FIELDS,
       symbol: SYMBOL
     }, function (err, snapshot) {
-      if (err) { throw err; }
-
-      console.log(util.format('=== %s ===', SYMBOL).cyan);
-      console.log(JSON.stringify(snapshot, null, 2));
+        if (err) { throw err; }
+        /*log snapshot information to console*/
+        console.log(util.format('=== %s ===', SYMBOL).cyan);
+        console.log(JSON.stringify(snapshot, null, 2));
       
+      /* render the query information to web client, using result route*/
       res.render('result', { 
         query: SYMBOL,
         page:'result',
@@ -102,9 +103,9 @@ router.post('/', function(req, res){
 });
 
 
-//DateUtil encapsulates all the methods we need to manipulate the date string in our project
+/*DateUtil encapsulates all the methods we need to manipulate the date string in our project*/
 var DateUtil = {
-
+/*convert data to "YYYY-MM-DD"*/
 	dateFormatting:function(date){
 		var year = date.getFullYear();
 
@@ -117,20 +118,26 @@ var DateUtil = {
       return year + "-" + month + "-" + day;
 
 	},
-
+/*get current time in "YYYY-MM-DD"*/
 	getCurrentDateTime:function() {
 
     	var date = new Date();
 
     	return  this.dateFormatting(date);
 	},
-
+/*get previous time in "YYYY-MM-DD"*/
 	getPreviousDateTime:function(op) {
 
     	var today       =new Date();
   		var pdate;
   		
-    	
+    	/*
+      * We simplify the situation by assume 
+      * 1 weeek = 7 days;
+      * 1 month  = 30 days;
+      * 3 months = 90 days;
+      * 1 year  = 365 days;
+      */
     	switch(op){
     		case 'week':
     			pdate   =new Date(new Date().setDate(new Date().getDate()-7));

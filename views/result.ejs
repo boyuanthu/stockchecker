@@ -5,13 +5,14 @@
   	
 
     <div class="container">
-
+      <!--  if no data, use the error view -->
         <% if(!data[0] || !info.name){  %>
            <% include partials/content/error.ejs %>
         <%  }else{ %>
-
+      <!--  if there is data, use the qresult view -->
         <% include partials/content/qresult.ejs %>
-    	 <%  } %>
+
+    	  <%  } %>
       
     </div><!-- container div -->
 	

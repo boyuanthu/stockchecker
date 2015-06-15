@@ -32,33 +32,30 @@
 
 
           <!-- These are the code to generate the line graph as required. -->
-        <% var t = [], open = [], high = [], low = [], close = [];%>
-        <% for(var i = 0; i < data.length; i++){  %>
+          <% var t = [], open = [], high = [], low = [], close = [];%>
+          <% for(var i = 0; i < data.length; i++){  %>
           <% t = t.concat(data[i].date); %>
           <% open = open.concat(data[i].open); %>
-          <% high = high.concat(data[i].high); %>
-          <% low = low.concat(data[i].low); %>
-          <% close = close.concat(data[i].close); %>
+
          <% } %>
-       
+          <!-- we use open price as google -->
          <% var dataOpen = [{x:t, y:open, type: "scatter"}];  %>
-         <% var dataHigh = [{x:t, y:high, type: "scatter"}];  %>
-         <% var dataLow = [{x:t, y:low, type: "scatter"}];  %>
-         <% var dataClose = [{x:t, y:close, type: "scatter"}];  %>
          <% var layout = {xaxis: {showticklabels:false},yaxis: {showticklabels:true}}; %>
+         <!-- we are not showing the ticker of x and y axis -->
          <% var graphOptions = {layout: layout, filename: "Stock Price Graph", fileopt: "overwrite"};  %>
-         <% var lurl = ""; %>
+        
          
          <% plotly.plot(dataOpen, graphOptions, function (err, msg) {  %>
-         <%   console.log(msg);  %>
+         <%   console.log(msg);  %> <!-- log the plot information to console. -->
          <% });  %>
 
-      <div class="center">
+
+      <div class="center" id="graphBox">
 
         <iframe id="graph" width="480" height="360" frameborder="0" seamless="seamless" scrolling="no" src="https://plot.ly/~yuanb10/89.embed?width=480&height=360" ></iframe>
 
 
-      </div>
+      </div><!-- GRAPHBOX -->
 
 
       </div><!-- BREIFBOX -->
