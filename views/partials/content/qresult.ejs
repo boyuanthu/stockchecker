@@ -1,0 +1,73 @@
+<div class = "row">
+
+      <div class = "col-md-6 col-md-offset-3 center white" id="briefBox">
+        <h4><%= info.name %> : <%= query %> <h4>
+        <!-- To indicate if it's up or down -->
+        <h5><% if(info.change > 0) { %>
+          <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span> 
+        <% } else if(info.change < 0){ %>
+
+          <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span>
+
+        <% } else { %>
+         <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+
+         <%  } %>
+          <%= Math.abs(info.change) %>
+        </h5> 
+        
+        <ul class="list-inline">
+          <li>OPEN: <%= info.open %></li>
+          <li>HIGH: <%= info.daysHigh %></li>
+          <li>LOW: <%= info.daysLow %></li>
+          <li>MKT CAP: <%= info.marketCapitalization %></li>
+          <li>RECORDS: <%= data.length %></li>
+          <% console.log(info.name); %>
+        </ul><!-- THE INLINE LIST SHOWING INFO OF THE STOCK -->
+          
+
+         <a href="/"><button id = "returnHome" class = "btn btn-success btn-lg">Back to Home</button></a>
+         <button id = "refreshPicture" class = "btn btn-warning btn-lg">Can't See the Graph</button>
+
+
+
+          <!-- These are the code to generate the line graph as required. -->
+        <% var t = [], open = [], high = [], low = [], close = [];%>
+        <% for(var i = 0; i < data.length; i++){  %>
+          <% t = t.concat(data[i].date); %>
+          <% open = open.concat(data[i].open); %>
+          <% high = high.concat(data[i].high); %>
+          <% low = low.concat(data[i].low); %>
+          <% close = close.concat(data[i].close); %>
+         <% } %>
+       
+         <% var dataOpen = [{x:t, y:open, type: "scatter"}];  %>
+         <% var dataHigh = [{x:t, y:high, type: "scatter"}];  %>
+         <% var dataLow = [{x:t, y:low, type: "scatter"}];  %>
+         <% var dataClose = [{x:t, y:close, type: "scatter"}];  %>
+         <% var layout = {xaxis: {showticklabels:false},yaxis: {showticklabels:true}}; %>
+         <% var graphOptions = {layout: layout, filename: "Stock Price Graph", fileopt: "overwrite"};  %>
+         <% var lurl = ""; %>
+         
+         <% plotly.plot(dataOpen, graphOptions, function (err, msg) {  %>
+         <%   console.log(msg);  %>
+         <% });  %>
+
+      <div class="center">
+
+        <iframe id="graph" width="480" height="360" frameborder="0" seamless="seamless" scrolling="no" src="https://plot.ly/~yuanb10/89.embed?width=480&height=360" ></iframe>
+
+
+      </div>
+
+
+      </div><!-- BREIFBOX -->
+
+       
+
+
+    </div>
+</div> <!-- row -->
+
+
+

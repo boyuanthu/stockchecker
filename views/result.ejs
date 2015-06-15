@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head><% include partials/template/head.ejs %></head>
+  <body>
+  	
+
+    <div class="container">
+
+        <% if(!data[0] || !info.name){  %>
+           <% include partials/content/error.ejs %>
+        <%  }else{ %>
+
+        <% include partials/content/qresult.ejs %>
+    	 <%  } %>
+      
+    </div><!-- container div -->
+	
+	
+	<% include partials/template/jsdefaults.ejs %>
+  <% include partials/content/resultjs.ejs %>
+
+  </body>
+</html>

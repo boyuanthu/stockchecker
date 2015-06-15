@@ -1,0 +1,92 @@
+html, body{
+	height: 100%;
+}
+.container{
+	padding-top: 50px;
+	background-image: url("/images/bs1.jpg");
+	/*background-color: #ebebeb;*/
+	width: 100%;
+	height: 100%;
+	background-size: cover;
+	background-position: center;
+}
+
+#formContainer{
+	margin-top: 100px;
+	background-color: #000;
+	opacity: .6;
+	padding: 10px;
+	border-radius: 3%;
+}
+
+#formContainer:hover{
+	opacity: .9;
+}
+
+.center{
+	text-align: center;
+}
+
+.white{
+	color: #fff;
+
+}
+
+p{
+	padding-top: 30px;
+	padding-left: 50px;
+}
+
+button{
+	margin-top: 20px;
+}
+
+.alert{
+	margin-top: 30px;
+	display: none;
+}
+
+.shown{
+	display: block;
+	margin: 0 auto;
+	height: 70%;
+
+}
+
+#briefBox{
+	background-color: #000;
+	opacity: .85;
+	padding: 10px;
+	border-radius: 3%;
+	
+}
+
+#briefBox iframe{
+	margin-top: 30px;
+}
+
+#errorBox{
+	background-color: #000;
+	opacity: .85;
+	border-radius: 3%;
+	color: white;
+	padding: 30px 20px;
+}
+
+.btn:hover{
+	opacity: 0.95;
+}
+
+
+#warnBox{
+	background-color: #000;
+	opacity: .85;
+	padding: 10px;
+	border-radius: 3%;
+	color: white;
+	display: none;
+	margin-top: 20px;
+}
+
+
+
