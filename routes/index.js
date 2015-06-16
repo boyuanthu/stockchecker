@@ -33,6 +33,68 @@ var FIELDS = _.flatten([
   // Misc
   ['t7', 't6', 'i5', 'l2', 'l3', 'v1', 'v7', 's6', 'e1']
   ]);
+  
+  
+/*DateUtil encapsulates all the methods we need to manipulate the date string in our project*/
+var DateUtil = {
+/*convert data to "YYYY-MM-DD"*/
+	dateFormatting:function(date){
+		var year = date.getFullYear();
+
+    	var month = date.getMonth() + 1;
+    	month = (month < 10 ? "0" : "") + month;
+
+   		 var day  = date.getDate();
+    	day = (day < 10 ? "0" : "") + day;
+
+      return year + "-" + month + "-" + day;
+
+	},
+/*get current time in "YYYY-MM-DD"*/
+	getCurrentDateTime:function() {
+
+    	var date = new Date();
+
+    	return  this.dateFormatting(date);
+	},
+/*get previous time in "YYYY-MM-DD"*/
+	getPreviousDateTime:function(op) {
+
+    	var today       =new Date();
+  		var pdate;
+  		
+    	/*
+      * We simplify the situation by assume 
+      * 1 weeek = 7 days;
+      * 1 month  = 30 days;
+      * 3 months = 90 days;
+      * 1 year  = 365 days;
+      */
+    	switch(op){
+    		case 'week':
+    			pdate   =new Date(new Date().setDate(new Date().getDate()-7));
+    			break;
+
+    		case 'month':
+    			pdate   =new Date(new Date().setDate(new Date().getDate()-30));
+    			break;
+
+    		case 'season':
+    			pdate   =new Date(new Date().setDate(new Date().getDate()-90));
+    			break;
+
+    		case 'year':
+    			pdate   =new Date(new Date().setDate(new Date().getDate()-365));
+    			break;
+
+    	}
+
+    	return  this.dateFormatting(pdate );
+	 }
+
+
+}
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -103,65 +165,6 @@ yahooFinance.historical({
 });
 
 
-/*DateUtil encapsulates all the methods we need to manipulate the date string in our project*/
-var DateUtil = {
-/*convert data to "YYYY-MM-DD"*/
-	dateFormatting:function(date){
-		var year = date.getFullYear();
-
-    	var month = date.getMonth() + 1;
-    	month = (month < 10 ? "0" : "") + month;
-
-   		 var day  = date.getDate();
-    	day = (day < 10 ? "0" : "") + day;
-
-      return year + "-" + month + "-" + day;
-
-	},
-/*get current time in "YYYY-MM-DD"*/
-	getCurrentDateTime:function() {
-
-    	var date = new Date();
-
-    	return  this.dateFormatting(date);
-	},
-/*get previous time in "YYYY-MM-DD"*/
-	getPreviousDateTime:function(op) {
-
-    	var today       =new Date();
-  		var pdate;
-  		
-    	/*
-      * We simplify the situation by assume 
-      * 1 weeek = 7 days;
-      * 1 month  = 30 days;
-      * 3 months = 90 days;
-      * 1 year  = 365 days;
-      */
-    	switch(op){
-    		case 'week':
-    			pdate   =new Date(new Date().setDate(new Date().getDate()-7));
-    			break;
-
-    		case 'month':
-    			pdate   =new Date(new Date().setDate(new Date().getDate()-30));
-    			break;
-
-    		case 'season':
-    			pdate   =new Date(new Date().setDate(new Date().getDate()-90));
-    			break;
-
-    		case 'year':
-    			pdate   =new Date(new Date().setDate(new Date().getDate()-365));
-    			break;
-
-    	}
-
-    	return  this.dateFormatting(pdate );
-	 }
-
-
-}
 
 
 
