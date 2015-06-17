@@ -35,7 +35,7 @@
           <% for(var i = 0; i < data.length; i++){  %>
           <% t = t.concat(data[i].date); %>
           <% open = open.concat(data[i].open); %>
-          <% } %>
+         <% } %>
           <!-- we use open price as google -->
          <% var dataOpen = [{x:t, y:open, type: "scatter"}];  %>
          <% var layout = {xaxis: {showticklabels:false},yaxis: {showticklabels:true}}; %>
