@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 
 /*Modules below are required by Bo*/
-
 var yahooFinance = require('yahoo-finance');
 var PLOTLY = require('plotly')("yuanb10", "ma28tmtelj");//it seems dangerous to reveal my api id and key here.
 

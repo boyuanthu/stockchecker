@@ -36,6 +36,7 @@ window.onload = function(){
   
   }
 
+  //this hides the warning message box when we type in something
   tk.oninput = function(){
     wbox.style.display = 'none';
 
